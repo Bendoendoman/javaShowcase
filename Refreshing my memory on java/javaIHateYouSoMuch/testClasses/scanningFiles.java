@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class scanningFiles {
@@ -60,19 +59,25 @@ public class scanningFiles {
     //specified in the functions argument. Then it runs the file through the same function to see if it is a directory, and if it is, it runs the function on that directory as well.
     //This is in order to get all the file names in the tree as opposed to only the file names in the directory you are in right now.
     //I am going to edit it to only print out the runnable .java files
+    //hopefully it works now?
+    //it does work now kindof, i need to split the string at the end of the directory that has java attached to it though, which should not be hard as I
+    //can simply look backwards to find the first "\" and work forward
     
-    void addTree(File file, Collection<File> all) {
+    ArrayList<String> addTree(File file, Collection<File> all,ArrayList<String> fileNames) {
         File[] children = file.listFiles();
         if (children != null) {
             for (File child : children) {
                 if(child.isDirectory() == true){
-                    all.add(child);
-                    addTree(child, all);
-                } else if(child.getName().contains("java")){
-                //} else if(child.getName().substring(child.getName().length()-4,child.getName().length()).equals("java")){
-                    all.add(child);
+                    addTree(child, all, fileNames);
+                } else if(child.getName().contains("java") && child.isHidden() != true && child.canExecute()){
+                //} else if(child.getName().substring(child.getName().length()-4,child.getName().length()).equals("java")){ this was an earlier attempt at the code i finished below
+                    
+                    fileNames.add(child.getName());
+                    //all.add(child); unused after i realized i only truly need to print a list of the runnable file names and not the entire file tree
                 }
+
             }
         }
+        return fileNames;
     }
 }

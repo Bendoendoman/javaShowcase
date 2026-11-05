@@ -18,12 +18,17 @@ public class main extends splittingCharacters{
         
         //scanning and reading files and also throwing exceptions
         Collection<File> all = new ArrayList<File>(); //i stole this line of code from stackOverflow, but also it's just an array list so whatever
+        //this one i made by myself, but its just an array list so whatever
+        ArrayList<String> trueFileNames = new ArrayList<String>();
 
         scanningFiles fileScanner = new scanningFiles();
+
         System.out.println("Please enter a program you want to run, or type cd to see available programs");
         boolean exit = false;
         while(exit == false){
+
             String program = console.next();
+
             switch (program){
                 case "printingFiles":
                     System.out.println("Please enter the file name");
@@ -34,11 +39,16 @@ public class main extends splittingCharacters{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 case "cd":
-                    fileScanner.addTree(new File("."), all);
-                    System.out.println(all);
+                    trueFileNames = fileScanner.addTree(new File("."), all, trueFileNames);
+                    
+                    System.out.println(trueFileNames);
+                    
                     all.clear();
+                    trueFileNames.clear();
                     continue;
+
                 case "exit":
                     exit = true; 
                     //System.exit(0); this also works
