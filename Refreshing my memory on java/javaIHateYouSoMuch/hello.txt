@@ -1,0 +1,4 @@
+
+This should edit the file
+This should be on the next line
+EXIT this shouldnt exit the code
